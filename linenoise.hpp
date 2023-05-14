@@ -2283,7 +2283,7 @@ inline bool linenoiseRaw(const char *prompt, std::string& line) {
 
     if (!isatty(STDIN_FILENO)) {
         /* Not a tty: read from file / pipe. */
-        std::getline(std::cin, line);
+        quit = not std::getline(std::cin, line);
     } else {
         /* Interactive editing. */
         if (enableRawMode(STDIN_FILENO) == false) {
@@ -2313,8 +2313,8 @@ inline bool Readline(const char *prompt, std::string& line) {
     if (isUnsupportedTerm()) {
         printf("%s",prompt);
         fflush(stdout);
-        std::getline(std::cin, line);
-        return false;
+        return not std::getline(std::cin, line);
+        //return false;
     } else {
         return linenoiseRaw(prompt, line);
     }
